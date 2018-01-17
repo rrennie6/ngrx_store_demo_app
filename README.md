@@ -1,24 +1,21 @@
-# README
+# Days Without - A simple example of using ngrx store
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+In days without, you can add a counter for determining how many days you have gone with or without doing a certain goal for as many goals as you'd like.
 
-Things you may want to cover:
+## Getting Started
 
-* Ruby version
+* Install ruby version 2.3.4
+* Run "gem install bundler"
+* Run "bundle install --path=vendor/bundle"
+* Run mysql commands below
+* Run "bundle exec rake db:migrate"
+* Run "bundle exec rake start_server"
+* Visit http://localhost:3000 in the browser
 
-* System dependencies
+## MySQL commands
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+create database ngrx_store_demo_dev;
+CREATE USER 'ngrx_demo_user'@'localhost' IDENTIFIED BY 'fake_pass';
+GRANT ALL PRIVILEGES ON \`ngrx_store_demo\_%\`.* TO 'ngrx_demo_user'@'localhost';
+```
