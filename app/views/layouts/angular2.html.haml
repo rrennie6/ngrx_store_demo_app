@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title= content_for(:title)
+  %base{href: yield(:base_url)}
+
+  %body
+    = yield :header
+    .font--lato.mui-p{ 'class' => yield(:container_class)}
+      .main-content
+        = yield
+
+    = javascript_include_tag 'vendor'
+    = javascript_include_tag 'compiled_v2'

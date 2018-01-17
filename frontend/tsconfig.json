@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": false,
+    "pretty": true,
+    "outDir": "spec_dist",
+    "strictNullChecks": false,
+    "lib": ["ES2017", "DOM"]
+  },
+  "exclude": [
+    "node_modules",
+    "src/typings",
+    "typings/main",
+    "typings/main.d.ts",
+    "vendor"
+  ]
+}
