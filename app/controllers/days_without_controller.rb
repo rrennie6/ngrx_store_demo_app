@@ -4,7 +4,7 @@ class DaysWithoutController < ApplicationController
   end
 
   def new
-    DaysWithout.create!(
+    render json: DaysWithout.create!(
       goal_name: params["goalName"],
       days: params["days"],
       with_or_without: params["withOrWithout"]

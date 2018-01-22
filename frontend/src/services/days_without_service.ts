@@ -19,7 +19,7 @@ export class DaysWithoutService {
 
   saveEntry(entry: DaysWithoutEntry): Observable<any> {
     return this.http.post(DaysWithoutService.SAVE_URL, entry)
-      .map((response: Response) => null);
+      .map((response: Response) => this.jsonToDaysWithoutEntry(response.json()));
   }
 
   resetEntry(goalName: string): Observable<any> {
@@ -30,6 +30,12 @@ export class DaysWithoutService {
   deleteEntry(goalName: string): Observable<any> {
     return this.http.post(DaysWithoutService.DELETE_URL, {goalName: goalName})
       .map((response: Response) => null);
+  }
+
+  private jsonToDaysWithoutEntry(json: any): DaysWithoutEntry {
+    return new DaysWithoutEntry(json.goal_name,
+                                json.days,
+                                json.with_or_without)
   }
 
   private jsonToDaysWithoutEntries(json: any): Array<DaysWithoutEntry> {

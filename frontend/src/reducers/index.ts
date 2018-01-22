@@ -13,6 +13,10 @@ export const daysWithoutReducer =
       case daysWithoutActions.LOAD_SUCCESS: {
         return action.payload.entries;
       }
+      case daysWithoutActions.SAVE_SUCCESS: {
+        entries.push(action.payload.entry);
+        return entries;
+      }
       default: {
         return entries;
       }
