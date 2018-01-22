@@ -72,7 +72,8 @@ export class DaysWithoutComponent {
       this.goalName,
       this.days,
       this.withOrWithout
-    )
-    this.store.dispatch(new daysWithoutActions.Save({entry: entry}))
+    );
+    this.store.dispatch(new daysWithoutActions.Save({entry: entry}));
+    this.toggleAddNewPanel();
   }
 }
