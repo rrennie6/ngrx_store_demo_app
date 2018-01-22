@@ -14,6 +14,10 @@ export interface ResetPayload {
   goalName: string;
 }
 
+export interface LoadSuccessPayload {
+  entries: Array<DaysWithoutEntry>;
+}
+
 export class Load implements Action {
   readonly type = LOAD;
 }
@@ -30,7 +34,7 @@ export class Reset implements Action {
 
 export class LoadSuccess implements Action {
   readonly type = LOAD_SUCCESS;
-  constructor(public payload: Array<DaysWithoutEntry>) { }
+  constructor(public payload: LoadSuccessPayload) { }
 }
 
 export type Actions = Load

@@ -45,7 +45,7 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
   }
 
   private readonly handleLoadResponse = (response: Array<DaysWithoutEntry>): daysWithoutActions.LoadSuccess => {
-    return new daysWithoutActions.LoadSuccess(response);
+    return new daysWithoutActions.LoadSuccess({entries: response});
   }
 
   private readonly handleSaveResponse = (response: any): Action => {

@@ -11,7 +11,7 @@ export const daysWithoutReducer =
   (entries: Array<DaysWithoutEntry>, action: Action): Array<DaysWithoutEntry> => {
     switch (action.type) {
       case daysWithoutActions.LOAD_SUCCESS: {
-        return action.payload;
+        return action.payload.entries;
       }
       default: {
         return entries;
