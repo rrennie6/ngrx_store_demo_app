@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get '/ui/*junk' => 'home#index'
   get '/days_without' => 'days_without#index'
   post '/days_without/new' => 'days_without#new'
+  post '/days_without/reset' => 'days_without#reset'
 end

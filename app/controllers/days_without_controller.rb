@@ -10,4 +10,8 @@ class DaysWithoutController < ApplicationController
       with_or_without: params["withOrWithout"]
     )
   end
+
+  def reset
+    DaysWithout.find_by(goal_name: params["goalName"]).update(days: 0)
+  end
 end

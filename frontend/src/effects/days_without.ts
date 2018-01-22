@@ -26,6 +26,12 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
       .mergeMap(this.saveService)
       .map(this.handleSaveResponse);
 
+  @Effect() resetDaysWithoutEntries = (): Observable<Action> =>
+    this.actions
+      .ofType(daysWithoutActions.RESET)
+      .mergeMap(this.resetService)
+      .map(this.handleResetResponse);
+
   private readonly loadService = (action: Action): Observable<Array<DaysWithoutEntry>> => {
     return this.daysWithoutService.getDaysWithoutEntries();
   }
@@ -34,11 +40,19 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
     return this.daysWithoutService.saveEntry(action.payload.entry);
   }
 
+  private readonly resetService = (action: Action): Observable<any> => {
+    return this.daysWithoutService.resetEntry(action.payload.entry);
+  }
+
   private readonly handleLoadResponse = (response: Array<DaysWithoutEntry>): daysWithoutActions.LoadSuccess => {
     return new daysWithoutActions.LoadSuccess(response);
   }
 
   private readonly handleSaveResponse = (response: any): Action => {
+    return new daysWithoutActions.Load();
+  }
+
+  private readonly handleResetResponse = (response: any): Action => {
     return new daysWithoutActions.Load();
   }
 }
