@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/days_without' => 'days_without#index'
   post '/days_without/new' => 'days_without#new'
   post '/days_without/reset' => 'days_without#reset'
+  post '/days_without/delete' => 'days_without#delete'
 end

@@ -8,6 +8,7 @@ export class DaysWithoutService {
   static RETRIEVAL_URL: string = '/days_without';
   static SAVE_URL: string = '/days_without/new';
   static RESET_URL: string = '/days_without/reset';
+  static DELETE_URL: string = '/days_without/delete';
 
   constructor(public http: Http) {}
 
@@ -23,6 +24,11 @@ export class DaysWithoutService {
 
   resetEntry(goalName: string): Observable<any> {
     return this.http.post(DaysWithoutService.RESET_URL, {goalName: goalName})
+      .map((response: Response) => null);
+  }
+
+  deleteEntry(goalName: string): Observable<any> {
+    return this.http.post(DaysWithoutService.DELETE_URL, {goalName: goalName})
       .map((response: Response) => null);
   }
 
