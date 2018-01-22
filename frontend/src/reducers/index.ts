@@ -14,8 +14,7 @@ export const daysWithoutReducer =
         return action.payload.entries;
       }
       case daysWithoutActions.SAVE_SUCCESS: {
-        entries.push(action.payload.entry);
-        return entries;
+        return entries.concat(action.payload.entry);
       }
       case daysWithoutActions.RESET_SUCCESS: {
         entries.find(entry => entry.goalName == action.payload.goalName).days = 0
