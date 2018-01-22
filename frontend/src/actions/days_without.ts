@@ -11,7 +11,7 @@ export interface SavePayload {
 }
 
 export interface ResetPayload {
-  entry: DaysWithoutEntry;
+  goalName: string;
 }
 
 export class Load implements Action {

@@ -22,7 +22,7 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
     {{ entry.days }}
   </h1>
   <div>
-    <button (click)="resetCount(entry)">
+    <button (click)="resetCount(entry.goalName)">
       Reset Count
     </button>
   </div>
@@ -34,7 +34,7 @@ export class DaysWithoutEntryComponent {
   @Input() entry: DaysWithoutEntry;
   constructor(private store: Store<State>) {}
 
-  private resetCount(entry: DaysWithoutEntry): void {
-    this.store.dispatch(new daysWithoutActions.Reset({entry: entry}))
+  private resetCount(goalName: string): void {
+    this.store.dispatch(new daysWithoutActions.Reset({goalName: goalName}))
   }
 }

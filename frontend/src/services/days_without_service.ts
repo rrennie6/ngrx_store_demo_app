@@ -22,7 +22,7 @@ export class DaysWithoutService {
   }
 
   resetEntry(goalName: string): Observable<any> {
-    return this.http.post(DaysWithoutService.RESET_URL, goalName)
+    return this.http.post(DaysWithoutService.RESET_URL, {goalName: goalName})
       .map((response: Response) => null);
   }
 

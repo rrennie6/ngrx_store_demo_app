@@ -41,7 +41,7 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
   }
 
   private readonly resetService = (action: Action): Observable<any> => {
-    return this.daysWithoutService.resetEntry(action.payload.entry);
+    return this.daysWithoutService.resetEntry(action.payload.goalName);
   }
 
   private readonly handleLoadResponse = (response: Array<DaysWithoutEntry>): daysWithoutActions.LoadSuccess => {
