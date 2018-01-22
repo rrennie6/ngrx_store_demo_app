@@ -36,7 +36,8 @@ import {selectDaysWithoutEntries} from '../selectors/days_without';
     <input [(ngModel)]='days'>Days so far
   </div>
   <div>
-    <input [(ngModel)]='withOrWithout'>"with" or "without"
+    <input type="radio" [(ngModel)]='withOrWithout' name="true" [value]="true">With
+    <input type="radio" [(ngModel)]='withOrWithout' name="false" [value]="false">Without
   </div>
   <div>
     <input [(ngModel)]='goalName'>Goal Name
@@ -54,7 +55,7 @@ export class DaysWithoutComponent {
   private daysWithoutEntries: Observable<Array<DaysWithoutEntry>>;
   private addingNewEntry: boolean = false;
   private days: number = 0;
-  private withOrWithout: string = '';
+  private withOrWithout: boolean = false;
   private goalName: string = '';
 
   constructor(private store: Store<State>) {
@@ -70,7 +71,7 @@ export class DaysWithoutComponent {
     const entry = new DaysWithoutEntry(
       this.goalName,
       this.days,
-      this.withOrWithout == 'with'
+      this.withOrWithout
     )
     this.store.dispatch(new daysWithoutActions.Save({entry: entry}))
   }
