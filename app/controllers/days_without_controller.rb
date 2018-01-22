@@ -19,5 +19,6 @@ class DaysWithoutController < ApplicationController
 
   def delete
     DaysWithout.find_by(goal_name: params["goalName"]).destroy
+    render json: {goalName: params["goalName"]}
   end
 end

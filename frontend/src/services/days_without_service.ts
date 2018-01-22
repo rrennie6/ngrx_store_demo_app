@@ -29,7 +29,7 @@ export class DaysWithoutService {
 
   deleteEntry(goalName: string): Observable<any> {
     return this.http.post(DaysWithoutService.DELETE_URL, {goalName: goalName})
-      .map((response: Response) => null);
+      .map((response: Response) => response.json());
   }
 
   private jsonToDaysWithoutEntry(json: any): DaysWithoutEntry {
