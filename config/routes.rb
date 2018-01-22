@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   get '/', to: redirect('/ui/days_without')
 
   get '/ui/*junk' => 'home#index'
-  resources :days_without, only: [:index]
+  get '/days_without' => 'days_without#index'
+  post '/days_without/new' => 'days_without#new'
 end

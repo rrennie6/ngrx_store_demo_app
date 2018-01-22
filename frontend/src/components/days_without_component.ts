@@ -9,18 +9,42 @@ import {selectDaysWithoutEntries} from '../selectors/days_without';
 @Component({
   selector: 'days-without',
   styles: [`
-    .inline--block {
+    .entry {
       display: inline-block;
-    }
-
-    .padding {
-      padding: 1em;
+      padding: 0.5em;
+      text-align: center;
+      font-size: 2em;
+      border: 5px solid black;
+      min-width: 10em;
+      max-width: 10em;
+      min-height: 10em;
+      max-height: 10em;
+      margin: 0.5em;
     }
   `],
   template: `
+<div>
+  <button (click)="toggleAddNewPanel()">
+    Add New
+  </button>
+  <button *ngIf="addingNewEntry" (click)="saveNewEntry()">
+    Save
+  </button>
+</div>
+<div *ngIf="addingNewEntry">
+  <div>
+    <input [(ngModel)]='days'>Days so far
+  </div>
+  <div>
+    <input [(ngModel)]='withOrWithout'>"with" or "without"
+  </div>
+  <div>
+    <input [(ngModel)]='goalName'>Goal Name
+  </div>
+</div>
 <div *ngFor='let entry of (daysWithoutEntries | async)'
      data-days-without-entry
-     class="inline--block padding"
+     class="entry"
      [entry]='entry'>
 </div>
   `
@@ -28,10 +52,26 @@ import {selectDaysWithoutEntries} from '../selectors/days_without';
 
 export class DaysWithoutComponent {
   private daysWithoutEntries: Observable<Array<DaysWithoutEntry>>;
+  private addingNewEntry: boolean = false;
+  private days: number = 0;
+  private withOrWithout: string = '';
+  private goalName: string = '';
 
   constructor(private store: Store<State>) {
     this.store.dispatch(new daysWithoutActions.Load);
     this.daysWithoutEntries = selectDaysWithoutEntries(this.store);
-    selectDaysWithoutEntries(this.store).subscribe(stuff => console.log(stuff));
+  }
+
+  private toggleAddNewPanel(): void {
+    this.addingNewEntry = !this.addingNewEntry;
+  }
+
+  private saveNewEntry(): void {
+    const entry = new DaysWithoutEntry(
+      this.goalName,
+      this.days,
+      this.withOrWithout == 'with'
+    )
+    this.store.dispatch(new daysWithoutActions.Save({entry: entry}))
   }
 }

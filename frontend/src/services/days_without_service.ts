@@ -6,12 +6,18 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
 @Injectable()
 export class DaysWithoutService {
   static RETRIEVAL_URL: string = '/days_without';
+  static SAVE_URL: string = '/days_without/new';
 
   constructor(public http: Http) {}
 
   getDaysWithoutEntries(): Observable<Array<DaysWithoutEntry>> {
     return this.http.request(DaysWithoutService.RETRIEVAL_URL)
       .map((response: Response) => this.jsonToDaysWithoutEntries(response.json()));
+  }
+
+  saveEntry(entry: DaysWithoutEntry): Observable<any> {
+    return this.http.post(DaysWithoutService.SAVE_URL, entry)
+      .map((response: Response) => null);
   }
 
   private jsonToDaysWithoutEntries(json: any): Array<DaysWithoutEntry> {

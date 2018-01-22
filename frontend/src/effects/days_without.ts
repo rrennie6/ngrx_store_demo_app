@@ -17,14 +17,28 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
   @Effect() loadDaysWithoutEntries = (): Observable<Action> =>
     this.actions
       .ofType(daysWithoutActions.LOAD)
-      .mergeMap(this.callService)
-      .map(this.handleResponse);
+      .mergeMap(this.loadService)
+      .map(this.handleLoadResponse);
 
-  private readonly callService = (action: Action): Observable<Array<DaysWithoutEntry>> => {
+  @Effect() saveDaysWithoutEntries = (): Observable<Action> =>
+    this.actions
+      .ofType(daysWithoutActions.SAVE)
+      .mergeMap(this.saveService)
+      .map(this.handleSaveResponse);
+
+  private readonly loadService = (action: Action): Observable<Array<DaysWithoutEntry>> => {
     return this.daysWithoutService.getDaysWithoutEntries();
   }
 
-  private readonly handleResponse = (response: Array<DaysWithoutEntry>): daysWithoutActions.LoadSuccess => {
+  private readonly saveService = (action: Action): Observable<any> => {
+    return this.daysWithoutService.saveEntry(action.payload.entry);
+  }
+
+  private readonly handleLoadResponse = (response: Array<DaysWithoutEntry>): daysWithoutActions.LoadSuccess => {
     return new daysWithoutActions.LoadSuccess(response);
+  }
+
+  private readonly handleSaveResponse = (response: any): Action => {
+    return new daysWithoutActions.Load();
   }
 }
