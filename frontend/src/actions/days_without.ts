@@ -7,6 +7,10 @@ export const SAVE         = '[Days Without] Save';
 export const SAVE_SUCCESS = '[Days Without] Save Success';
 export const RESET        = '[Days Without] Reset';
 
+export interface LoadSuccessPayload {
+  entries: Array<DaysWithoutEntry>;
+}
+
 export interface SavePayload {
   entry: DaysWithoutEntry;
 }
@@ -19,12 +23,13 @@ export interface ResetPayload {
   goalName: string;
 }
 
-export interface LoadSuccessPayload {
-  entries: Array<DaysWithoutEntry>;
-}
-
 export class Load implements Action {
   readonly type = LOAD;
+}
+
+export class LoadSuccess implements Action {
+  readonly type = LOAD_SUCCESS;
+  constructor(public payload: LoadSuccessPayload) { }
 }
 
 export class Save implements Action {
@@ -40,11 +45,6 @@ export class SaveSuccess implements Action {
 export class Reset implements Action {
   readonly type = RESET;
   constructor(public payload: ResetPayload) { }
-}
-
-export class LoadSuccess implements Action {
-  readonly type = LOAD_SUCCESS;
-  constructor(public payload: LoadSuccessPayload) { }
 }
 
 export type Actions = Load
