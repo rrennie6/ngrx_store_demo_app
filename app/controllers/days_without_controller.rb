@@ -12,7 +12,9 @@ class DaysWithoutController < ApplicationController
   end
 
   def reset
-    DaysWithout.find_by(goal_name: params["goalName"]).update(days: 0)
+    entry = DaysWithout.find_by(goal_name: params["goalName"])
+    entry.update(days: 0)
+    render json: entry
   end
 
   def delete

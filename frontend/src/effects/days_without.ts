@@ -40,7 +40,7 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
     return this.daysWithoutService.saveEntry(action.payload.entry);
   }
 
-  private readonly resetService = (action: Action): Observable<any> => {
+  private readonly resetService = (action: Action): Observable<DaysWithoutEntry> => {
     return this.daysWithoutService.resetEntry(action.payload.goalName);
   }
 
@@ -52,7 +52,7 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
     return new daysWithoutActions.SaveSuccess({entry: response});
   }
 
-  private readonly handleResetResponse = (response: any): Action => {
-    return new daysWithoutActions.Load();
+  private readonly handleResetResponse = (response: DaysWithoutEntry): Action => {
+    return new daysWithoutActions.ResetSuccess({goalName: response.goalName});
   }
 }

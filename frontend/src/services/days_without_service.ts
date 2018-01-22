@@ -24,7 +24,7 @@ export class DaysWithoutService {
 
   resetEntry(goalName: string): Observable<any> {
     return this.http.post(DaysWithoutService.RESET_URL, {goalName: goalName})
-      .map((response: Response) => null);
+      .map((response: Response) => this.jsonToDaysWithoutEntry(response.json()));
   }
 
   deleteEntry(goalName: string): Observable<any> {

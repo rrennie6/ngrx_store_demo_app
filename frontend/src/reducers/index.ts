@@ -17,6 +17,10 @@ export const daysWithoutReducer =
         entries.push(action.payload.entry);
         return entries;
       }
+      case daysWithoutActions.RESET_SUCCESS: {
+        entries.find(entry => entry.goalName == action.payload.goalName).days = 0
+        return entries;
+      }
       default: {
         return entries;
       }

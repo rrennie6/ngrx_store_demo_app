@@ -1,11 +1,12 @@
 import {Action} from '@ngrx/store';
 import {DaysWithoutEntry} from '../models/days_without_entry';
 
-export const LOAD         = '[Days Without] Load';
-export const LOAD_SUCCESS = '[Days Without] Load Success';
-export const SAVE         = '[Days Without] Save';
-export const SAVE_SUCCESS = '[Days Without] Save Success';
-export const RESET        = '[Days Without] Reset';
+export const LOAD          = '[Days Without] Load';
+export const LOAD_SUCCESS  = '[Days Without] Load Success';
+export const SAVE          = '[Days Without] Save';
+export const SAVE_SUCCESS  = '[Days Without] Save Success';
+export const RESET         = '[Days Without] Reset';
+export const RESET_SUCCESS = '[Days Without] Reset Success';
 
 export interface LoadSuccessPayload {
   entries: Array<DaysWithoutEntry>;
@@ -20,6 +21,10 @@ export interface SaveSuccessPayload {
 }
 
 export interface ResetPayload {
+  goalName: string;
+}
+
+export interface ResetSuccessPayload {
   goalName: string;
 }
 
@@ -47,8 +52,14 @@ export class Reset implements Action {
   constructor(public payload: ResetPayload) { }
 }
 
+export class ResetSuccess implements Action {
+  readonly type = RESET_SUCCESS;
+  constructor(public payload: ResetSuccessPayload) { }
+}
+
 export type Actions = Load
   | LoadSuccess
   | Save
   | SaveSuccess
-  | Reset;
+  | Reset
+  | ResetSuccess;
