@@ -11,6 +11,7 @@ import {DaysWithoutComponent} from './components/days_without_component';
 import {DaysWithoutEntryComponent} from './components/days_without_entry_component';
 import {DaysWithoutService} from './services/days_without_service';
 import {DaysWithoutEffects} from './effects/days_without';
+import {NewEntryEffects} from './effects/new_entry';
 import {reducer} from './reducers';
 
 @NgModule({
@@ -25,7 +26,8 @@ import {reducer} from './reducers';
     Routing,
     HttpModule,
     StoreModule.provideStore(reducer),
-    EffectsModule.run(DaysWithoutEffects)
+    EffectsModule.run(DaysWithoutEffects),
+    EffectsModule.run(NewEntryEffects)
   ],
   providers: [
     AppRoutingProviders,

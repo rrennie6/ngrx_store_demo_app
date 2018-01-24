@@ -1,10 +1,13 @@
 import {Action} from '@ngrx/store';
 import {ActionReducer, combineReducers} from '@ngrx/store';
 import * as daysWithoutActions from '../actions/days_without';
+import * as newEntryActions from '../actions/new_entry';
 import {DaysWithoutEntry} from '../models/days_without_entry';
+import * as fromNewEntry from './new_entry';
 
 export interface State {
   daysWithoutEntries: Array<DaysWithoutEntry>;
+  newEntry: fromNewEntry.State;
 }
 
 export const daysWithoutReducer =
@@ -13,7 +16,7 @@ export const daysWithoutReducer =
       case daysWithoutActions.LOAD_SUCCESS: {
         return action.payload.entries;
       }
-      case daysWithoutActions.SAVE_SUCCESS: {
+      case newEntryActions.SAVE_SUCCESS: {
         return entries.concat(action.payload.entry);
       }
       case daysWithoutActions.RESET_SUCCESS: {
@@ -27,5 +30,6 @@ export const daysWithoutReducer =
   };
 
 export const reducer: ActionReducer<State> = combineReducers({
-  daysWithoutEntries: daysWithoutReducer
+  daysWithoutEntries: daysWithoutReducer,
+  newEntry: fromNewEntry.reducer
 });

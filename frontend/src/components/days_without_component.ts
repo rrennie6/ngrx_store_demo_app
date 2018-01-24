@@ -5,6 +5,8 @@ import {Observable} from 'rxjs/Observable';
 import * as daysWithoutActions from '../actions/days_without';
 import {DaysWithoutEntry} from '../models/days_without_entry';
 import {selectDaysWithoutEntries} from '../selectors/days_without';
+import * as newEntrySelectors from '../selectors/new_entry';
+import * as newEntryActions from '../actions/new_entry';
 
 @Component({
   selector: 'days-without',
@@ -33,14 +35,22 @@ import {selectDaysWithoutEntries} from '../selectors/days_without';
 </div>
 <div *ngIf="addingNewEntry">
   <div>
-    <input [(ngModel)]='days'>Days so far
+    <input (input)="setDays($event.target.value)">Days so far
   </div>
   <div>
-    <input type="radio" [(ngModel)]='withOrWithout' name="true" [value]="true">With
-    <input type="radio" [(ngModel)]='withOrWithout' name="false" [value]="false">Without
+    <input type="radio"
+           (click)="setWithOrWithout($event.target.value)"
+           name="options"
+           ngControl="options"
+           [value]="true">With
+    <input type="radio"
+           (click)="setWithOrWithout($event.target.value)"
+           name="options"
+           ng-control="options"
+           [value]="false">Without
   </div>
   <div>
-    <input [(ngModel)]='goalName'>Goal Name
+    <input (input)="setGoalName($event.target.value)">Goal Name
   </div>
 </div>
 <div *ngFor='let entry of (daysWithoutEntries | async)'
@@ -54,13 +64,28 @@ import {selectDaysWithoutEntries} from '../selectors/days_without';
 export class DaysWithoutComponent {
   private daysWithoutEntries: Observable<Array<DaysWithoutEntry>>;
   private addingNewEntry: boolean = false;
-  private days: number = 0;
-  private withOrWithout: boolean = false;
-  private goalName: string = '';
+  private days: Observable<number>;
+  private withOrWithout: Observable<boolean>;
+  private goalName: Observable<string>;
 
   constructor(private store: Store<State>) {
     this.store.dispatch(new daysWithoutActions.Load);
     this.daysWithoutEntries = selectDaysWithoutEntries(this.store);
+    this.days = newEntrySelectors.selectDays(this.store);
+    this.withOrWithout = newEntrySelectors.selectWithOrWithout(this.store);
+    this.goalName = newEntrySelectors.selectGoalName(this.store);
+  }
+
+  private setDays(days: number) {
+    this.store.dispatch(new newEntryActions.SetDays({days: +days}));
+  }
+
+  private setWithOrWithout(withOrWithout: boolean) {
+    this.store.dispatch(new newEntryActions.SetWithOrWithout({withOrWithout: withOrWithout}));
+  }
+
+  private setGoalName(goalName: string) {
+    this.store.dispatch(new newEntryActions.SetGoalName({goalName: goalName}));
   }
 
   private toggleAddNewPanel(): void {
@@ -68,12 +93,7 @@ export class DaysWithoutComponent {
   }
 
   private saveNewEntry(): void {
-    const entry = new DaysWithoutEntry(
-      this.goalName,
-      this.days,
-      this.withOrWithout
-    );
-    this.store.dispatch(new daysWithoutActions.Save({entry: entry}));
+    this.store.dispatch(new newEntryActions.Save());
     this.toggleAddNewPanel();
   }
 }

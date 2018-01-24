@@ -1,4 +1,4 @@
-import {Injectable, Inject} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Action, Store} from '@ngrx/store';
 import {State} from '../reducers';
 import {Observable} from 'rxjs/Observable';
@@ -20,12 +20,6 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
       .mergeMap(this.loadService)
       .map(this.handleLoadResponse);
 
-  @Effect() saveDaysWithoutEntries = (): Observable<Action> =>
-    this.actions
-      .ofType(daysWithoutActions.SAVE)
-      .mergeMap(this.saveService)
-      .map(this.handleSaveResponse);
-
   @Effect() resetDaysWithoutEntries = (): Observable<Action> =>
     this.actions
       .ofType(daysWithoutActions.RESET)
@@ -36,20 +30,12 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
     return this.daysWithoutService.getDaysWithoutEntries();
   }
 
-  private readonly saveService = (action: Action): Observable<DaysWithoutEntry> => {
-    return this.daysWithoutService.saveEntry(action.payload.entry);
-  }
-
   private readonly resetService = (action: Action): Observable<DaysWithoutEntry> => {
     return this.daysWithoutService.resetEntry(action.payload.goalName);
   }
 
   private readonly handleLoadResponse = (response: Array<DaysWithoutEntry>): daysWithoutActions.LoadSuccess => {
     return new daysWithoutActions.LoadSuccess({entries: response});
-  }
-
-  private readonly handleSaveResponse = (response: DaysWithoutEntry): Action => {
-    return new daysWithoutActions.SaveSuccess({entry: response});
   }
 
   private readonly handleResetResponse = (response: DaysWithoutEntry): Action => {
