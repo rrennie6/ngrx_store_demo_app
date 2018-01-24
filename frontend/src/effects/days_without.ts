@@ -20,7 +20,7 @@ import {DaysWithoutEntry} from '../models/days_without_entry';
       .mergeMap(this.loadService)
       .map(this.handleLoadResponse);
 
-  @Effect() resetDaysWithoutEntries = (): Observable<Action> =>
+  @Effect() resetDaysWithoutEntry = (): Observable<Action> =>
     this.actions
       .ofType(daysWithoutActions.RESET)
       .mergeMap(this.resetService)
