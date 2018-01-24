@@ -3,10 +3,12 @@ import {Store} from '@ngrx/store';
 import {State} from '../reducers';
 import {Observable} from 'rxjs/Observable';
 import * as daysWithoutActions from '../actions/days_without';
+import * as newEntryActions from '../actions/new_entry';
+import * as viewActions from '../actions/view';
 import {DaysWithoutEntry} from '../models/days_without_entry';
 import {selectDaysWithoutEntries} from '../selectors/days_without';
 import * as newEntrySelectors from '../selectors/new_entry';
-import * as newEntryActions from '../actions/new_entry';
+import * as viewSelectors from '../selectors/view';
 
 @Component({
   selector: 'days-without',
@@ -26,14 +28,14 @@ import * as newEntryActions from '../actions/new_entry';
   `],
   template: `
 <div>
-  <button (click)="toggleAddNewPanel()">
+  <button (click)="setSavePanelOpen(true)">
     Add New
   </button>
-  <button *ngIf="addingNewEntry" (click)="saveNewEntry()">
+  <button *ngIf="(addingNewEntry | async)" (click)="saveNewEntry()">
     Save
   </button>
 </div>
-<div *ngIf="addingNewEntry">
+<div *ngIf="(addingNewEntry | async)">
   <div>
     <input (input)="setDays($event.target.value)">Days so far
   </div>
@@ -63,14 +65,16 @@ import * as newEntryActions from '../actions/new_entry';
 
 export class DaysWithoutComponent {
   private daysWithoutEntries: Observable<Array<DaysWithoutEntry>>;
-  private addingNewEntry: boolean = false;
+  private addingNewEntry: Observable<boolean>;
   private days: Observable<number>;
   private withOrWithout: Observable<boolean>;
   private goalName: Observable<string>;
 
   constructor(private store: Store<State>) {
     this.store.dispatch(new daysWithoutActions.Load);
+    this.setSavePanelOpen(false);
     this.daysWithoutEntries = selectDaysWithoutEntries(this.store);
+    this.addingNewEntry = viewSelectors.selectSavePanelOpen(this.store);
     this.days = newEntrySelectors.selectDays(this.store);
     this.withOrWithout = newEntrySelectors.selectWithOrWithout(this.store);
     this.goalName = newEntrySelectors.selectGoalName(this.store);
@@ -88,12 +92,12 @@ export class DaysWithoutComponent {
     this.store.dispatch(new newEntryActions.SetGoalName({goalName: goalName}));
   }
 
-  private toggleAddNewPanel(): void {
-    this.addingNewEntry = !this.addingNewEntry;
+  private setSavePanelOpen(savePanelOpen: boolean): void {
+    this.store.dispatch(new viewActions.SetSavePanelOpen({savePanelOpen: savePanelOpen}));
   }
 
   private saveNewEntry(): void {
     this.store.dispatch(new newEntryActions.Save());
-    this.toggleAddNewPanel();
+    this.setSavePanelOpen(false);
   }
 }

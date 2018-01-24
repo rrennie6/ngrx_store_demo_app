@@ -4,10 +4,12 @@ import * as daysWithoutActions from '../actions/days_without';
 import * as newEntryActions from '../actions/new_entry';
 import {DaysWithoutEntry} from '../models/days_without_entry';
 import * as fromNewEntry from './new_entry';
+import * as fromView from './view';
 
 export interface State {
   daysWithoutEntries: Array<DaysWithoutEntry>;
   newEntry: fromNewEntry.State;
+  view: fromView.State;
 }
 
 export const daysWithoutReducer =
@@ -31,5 +33,6 @@ export const daysWithoutReducer =
 
 export const reducer: ActionReducer<State> = combineReducers({
   daysWithoutEntries: daysWithoutReducer,
-  newEntry: fromNewEntry.reducer
+  newEntry: fromNewEntry.reducer,
+  view: fromView.reducer
 });
