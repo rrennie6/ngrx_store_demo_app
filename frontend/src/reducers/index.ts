@@ -25,6 +25,9 @@ export const daysWithoutReducer =
         entries.find(entry => entry.goalName == action.payload.goalName).days = 0
         return entries;
       }
+      case daysWithoutActions.DELETE_SUCCESS: {
+        return entries.filter(entry => entry.goalName !== action.payload.goalName);
+      }
       default: {
         return entries;
       }
